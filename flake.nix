@@ -20,6 +20,7 @@
           packages = with pkgs; [
             bun
             astro-language-server
+            typescript
           ];
         };
       }
