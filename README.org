@@ -1,4 +1,0 @@
-
-* What is problemize?
-
-Problemize is a way of packaging html/js exercises with a nice interface
