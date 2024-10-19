@@ -2,3 +2,36 @@
 * What is problemize?
 
 Problemize is a way of packaging html/js exercises with a nice interface
+
+* How it will work
+
+** Page generation
+
+When parsing the markup of a notebook each file will be transformed using a template to create the pages, also adding interactivity such as navigation in between pages, the main page exercise list and the interface for the runnable code
+
+#+begin_example
+ Project root                  
+ ├── index.(md|org)            
+ ├── ex 1                      
+ │   ├── ex1.(md|org)          
+ │   ├── index.html            
+ │   └── script.js             
+ └── ex 2                      
+     └── ex2.org               
+#+end_example
+
+In the project root we will have an index.(md|org) file which will contain the main page text. In each exercise folder we will have a markup file containing some exercise explanation, and the page and scripts that make the exercise. With org you will also be able to only have an org file with the code inside.
+
+The markup files will be processed through a template page which will output the main page and each exercise page.
+
+*** Main page
+
+The main page will contain some text to explain the notebook (project) and a list of exercises to open.
+
+*** Exercise page
+
+The page will consist of the rendered markup document, and the provided code which will be displayed along with a region where it will be run. When using org, we can also add runnable code snippets for testing each part of the code and the use of noweb syntax so that the exported files can be split into different code blocs inside the org document.
+
+** Sandboxing
+
+We can try [[https://github.com/JetBrains/websandbox][this libary]] to sandbox the code that will run.
