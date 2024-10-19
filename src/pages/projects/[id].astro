@@ -1,0 +1,31 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+    const projects = await getCollection("projects");
+
+    return projects.map((project: any) => ({
+        params: { id: project.slug },
+        props: { project },
+    }));
+}
+
+const { project } = Astro.props;
+const { data, slug } = project;
+const { title, description } = data;
+const { Content } = await render(project);
+export const prerender = true;
+---
+
+<Layout title={`${title} - DAW`}>
+    <div class="flex justify-center items-center content-center w-screen h-screen">
+        <div class="prose prose-invert">
+            <h1>{title}</h1>
+            <div class="mt-10">{description}</div>
+            <div class="text-justify">
+                <Content />
+            </div>
+        </div>
+    </div>
+</Layout>
