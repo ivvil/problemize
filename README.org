@@ -35,3 +35,23 @@ The page will consist of the rendered markup document, and the provided code whi
 ** Sandboxing
 
 We can try [[https://github.com/JetBrains/websandbox][this libary]] to sandbox the code that will run.
+
+** Code blocks
+
+One of the big features we want to implement is a way to see the rendered output and the code of the exercises, like codepen. Some options for implementing this behavior are:
+
+*** Astro's ~<Code />~ component
+
+Astro has a builtin code display element with syntax highlighting, using [[https://shiki.style/][shiki]]. I don't think these components let you edit the code, so they aren't an option.
+
+*** Custom astro component
+
+We could build our own component in astro, using either [[https://codemirror.net/][CodeMirror]] or the [[https://microsoft.github.io/monaco-editor/][Monaco Editor]] but it seems like the only way to pass arguments to these such as the code to display can only be done through props, which involve including the code as a string in the javascript code, or loading it from somewhere else.
+
+*** Web components
+
+This might be the most viable option; Creating a custom web component would allow us to make a custom environment to group various code editors, the output frame and other elements we need. These components will still use CodeMirror o Monaco as an editor.
+
+*** Svelte component with custom preprocessor
+
+Using a custom preprocessor we would be able to define our own markup that would be translated to the valid code needed. This option is a lot more ergonomic than using plain astro components, but need svelte to be added to the project, which seems like too much if this is it's only use.
