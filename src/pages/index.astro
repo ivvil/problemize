@@ -1,21 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import CodeEditor from '../components/CodeEditor.svelte';
 import CodeDisplay from '../components/CodeDisplay.svelte'
+import CodeEditor from '../components/CodeEditor.astro'
 ---
 
 <Layout title="NOc">
 	<main>
 		<!-- <CodeEditor client:load code="Hello, World! Hi">
 		</CodeEditor> -->
-		<CodeDisplay client:load>
-			<code slot="htmlCode">
-HTML
-			</code>
-			<code slot="jsEditor">
-JS
-			</code>
-		</CodeDisplay>
+		<CodeEditor code="Hello world"></CodeEditor>
 		<h1>A</h1>
 	</main>
 </Layout>

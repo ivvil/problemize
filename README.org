@@ -55,3 +55,4 @@ This might be the most viable option; Creating a custom web component would allo
 *** Svelte component with custom preprocessor
 
 Using a custom preprocessor we would be able to define our own markup that would be translated to the valid code needed. This option is a lot more ergonomic than using plain astro components, but need svelte to be added to the project, which seems like too much if this is it's only use.
+
