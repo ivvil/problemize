@@ -1,5 +1,5 @@
 <script lang="ts">
-  let code : HTMLSpanElement;
+  export let code : string;
   
   import type monaco from 'monaco-editor';
   import { onMount } from 'svelte';
@@ -35,7 +35,7 @@
 
     Monaco = await import('monaco-editor');
     editor = Monaco.editor.create(divEl, {
-      value: code.innerText,
+      value: code.trim(),
       language: 'plaintext'
     });
 
@@ -45,9 +45,9 @@
   });
 </script>
 
-<div bind:this={divEl} class="h-screen" />
+<div bind:this={divEl} style="height: 100vh; width: 50vw;" />
 
-<span bind:this="{code}">
-  <slot  />
-</span>
+<!-- <span bind:this="{code}" style="display: none;"> -->
+<!--   <slot  /> -->
+<!-- </span> -->
 
