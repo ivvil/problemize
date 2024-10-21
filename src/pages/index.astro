@@ -1,9 +1,46 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import { getCollection, render } from "astro:content";
+
+const projects = await getCollection("projects");
+export const prerender = true;
 ---
 
 <Layout title="NOc">
-	<main>
-		<h1>A</h1>
-	</main>
+    <main>
+        <h1 class="text-center text-7xl font-extrabold mb-24">
+            Dev 👨‍💻
+            <span class="block">projects</span>
+        </h1>
+
+        <section aria-label="Libros recomendados para programadores">
+            <div class="px-4 mx-auto max-w-screen-xl">
+                <div class="grid gap-6 md:grid-cols-2">
+                    {
+                        projects.map((project) => {
+                            const { slug, data } = project;
+                            const { title, description, html_path, css_path, js_path } = data;
+
+                            return (
+                                <article class="flex hover:scale-105 transition">
+                                    <a href={`/projects/${slug}`} class="flex">
+                                        <iframe transition:name={`flame-${slug}`} class="mb-2 xl:mb-0 transition mr-2 overflow-hidden" src={`${html_path}`} />
+                                        <div class="flex flex-col justify-center">
+                                            <h2 transition:name={`title-${slug}`} class="mb-2 text-2xl font-bold leading-tight text-white">
+                                                {title}
+                                            </h2>
+
+                                            <p transition:name={`desc-${slug}`} class="mb-4 text-gray-300 max-w-sm">
+                                                {description}
+                                            </p>
+                                        </div>
+                                    </a>
+                                </article>
+                            );
+                        })
+                    }
+                </div>
+            </div>
+        </section>
+    </main>
 </Layout>

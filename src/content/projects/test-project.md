@@ -1,7 +1,9 @@
 ---
 title: "Test"
 description: "This is a text description"
-type: "content"
+html_path: "/test.html"
+css_path: "./test.css"
+js_path: "./test.js"
 ---
 
 ## This is a test

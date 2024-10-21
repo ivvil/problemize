@@ -5,6 +5,9 @@ const projects = defineCollection({
     schema: z.object({
         title: z.string(),
         description: z.string(),
+        html_path: z.string(),
+        css_path: z.string(),
+        js_path: z.string(),
     }),
 });
 
