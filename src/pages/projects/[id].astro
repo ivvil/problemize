@@ -13,17 +13,18 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { data, slug } = project;
-const { title, description } = data;
+const { title, description, html_path } = data;
 const { Content } = await render(project);
 export const prerender = true;
 ---
 
 <Layout title={`${title} - DAW`}>
-    <div class="flex justify-center items-center content-center w-screen h-screen">
+    <div class="flex justify-center items-center content-center w-screen h-screen max-h-screen max-w-screen">
+        <iframe transition:name={`frame-${slug}`} class="m-3 w-full max-w-xl mr-40 h-80" src={`${html_path}`}></iframe>
         <div class="prose prose-invert">
-            <h1>{title}</h1>
+            <h1 transition:name={`title-${slug}`}>{title}</h1>
             <div class="mt-10">{description}</div>
-            <div class="text-justify">
+            <div transition:name={`desc-${slug}`} class="text-justify break-all">
                 <Content />
             </div>
         </div>
