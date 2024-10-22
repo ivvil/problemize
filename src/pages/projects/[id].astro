@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
+import CodeDisplay from '../../components/CodeDisplay.svelte';
 import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
@@ -13,7 +14,7 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { data, slug } = project;
-const { title, description, html_path } = data;
+const { title, description, html_path, js_path } = data;
 const { Content } = await render(project);
 export const prerender = true;
 ---
@@ -29,4 +30,5 @@ export const prerender = true;
             </div>
         </div>
     </div>
+	<CodeDisplay client:load html={html_path} js={js_path} />
 </Layout>

@@ -1,48 +1,56 @@
 <script lang="ts">
-  export let code : string;
-  
-  import type monaco from 'monaco-editor';
-  import { onMount } from 'svelte';
-  import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
-  import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
-  import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
-  import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
-  import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+	export let code: string = "";
+	export let lang: string = "plaintext";
+	export let conf: object = {};
 
-  let divEl: HTMLDivElement = null;
-  let editor: monaco.editor.IStandaloneCodeEditor;
-  let Monaco;
+	import type monaco from "monaco-editor";
+	import { onMount } from "svelte";
+	import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
+	import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
+	import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
+	import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
+	import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
 
-  onMount(async () => {
-    // @ts-ignore
-    self.MonacoEnvironment = {
-      getWorker: function (_moduleId: any, label: string) {
-        if (label === 'json') {
-          return new jsonWorker();
-        }
-        if (label === 'css' || label === 'scss' || label === 'less') {
-          return new cssWorker();
-        }
-        if (label === 'html' || label === 'handlebars' || label === 'razor') {
-          return new htmlWorker();
-        }
-        if (label === 'typescript' || label === 'javascript') {
-          return new tsWorker();
-        }
-        return new editorWorker();
-      }
-    };
+	let divEl: HTMLDivElement = null;
+	let editor: monaco.editor.IStandaloneCodeEditor;
+	let Monaco;
 
-    Monaco = await import('monaco-editor');
-    editor = Monaco.editor.create(divEl, {
-      value: code.trim(),
-      language: 'plaintext'
-    });
+	onMount(async () => {
+		// Merge code and language into config
+		Object.assign(conf, {
+			value: code,
+			language: lang,
+		});
 
-    return () => {
-      editor.dispose();
-    };
-  });
+	  $: console.log(conf);
+	  $: console.log(code, lang, conf);
+
+		// @ts-ignore
+		self.MonacoEnvironment = {
+			getWorker: function (_moduleId: any, label: string) {
+				if (label === "json") {
+					return new jsonWorker();
+				}
+				if (label === "css" || label === "scss" || label === "less") {
+					return new cssWorker();
+				}
+				if (label === "html" || label === "handlebars" || label === "razor") {
+					return new htmlWorker();
+				}
+				if (label === "typescript" || label === "javascript") {
+					return new tsWorker();
+				}
+				return new editorWorker();
+			},
+		};
+
+		Monaco = await import("monaco-editor");
+		editor = Monaco.editor.create(divEl, conf);
+
+		return () => {
+			editor.dispose();
+		};
+	});
 </script>
 
 <div bind:this={divEl} style="height: 100vh; width: 50vw;" />
@@ -50,4 +58,3 @@
 <!-- <span bind:this="{code}" style="display: none;"> -->
 <!--   <slot  /> -->
 <!-- </span> -->
-
